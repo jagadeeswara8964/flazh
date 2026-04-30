@@ -184,3 +184,62 @@ function updateGlitters() {
 }
 
 updateGlitters();
+
+// Scrolling Penguin Logic
+const penguin = document.getElementById('scrolling-penguin');
+const penguinImg = penguin.querySelector('img');
+const penguinDialog = penguin.querySelector('.penguin-dialog');
+
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPosition = window.scrollY;
+    const scrollPercentage = Math.min(Math.max(scrollPosition / scrollHeight, 0), 1);
+    
+    // Calculate movement: from left to right across the screen
+    const range = window.innerWidth + 300;
+    const currentX = scrollPercentage * range;
+    
+    penguin.style.transform = `translateX(${currentX}px)`;
+    
+    // Flip penguin based on scroll direction
+    if (scrollPosition > lastScrollY) {
+        penguinImg.style.transform = 'scaleX(1)'; // Moving right (down)
+    } else if (scrollPosition < lastScrollY) {
+        penguinImg.style.transform = 'scaleX(-1)'; // Moving left (up)
+    }
+    
+    lastScrollY = scrollPosition;
+});
+
+// Initial position
+window.dispatchEvent(new Event('scroll'));
+
+// Penguin Interactivity
+let isJumping = false;
+const messages = [
+    "Woot!",
+    "Onchain is better!",
+    "Waddle waddle...",
+    "Freaky Flame is here!",
+    "Check out Freaky Flame!",
+    "Stay Cool! ❄️"
+];
+
+penguin.addEventListener('click', () => {
+    if (isJumping) return;
+    
+    isJumping = true;
+    penguin.classList.add('active');
+    penguinImg.classList.add('penguin-jump');
+    
+    // Random message
+    penguinDialog.innerText = messages[Math.floor(Math.random() * messages.length)];
+    
+    setTimeout(() => {
+        penguin.classList.remove('active');
+        penguinImg.classList.remove('penguin-jump');
+        isJumping = false;
+    }, 1500);
+});

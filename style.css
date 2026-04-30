@@ -289,3 +289,115 @@ footer p {
     opacity: 0.5;
     letter-spacing: 1px;
 }
+
+/* Scrolling Penguin Styles */
+#scrolling-penguin {
+    position: fixed;
+    bottom: 30px; /* Adjusted to sit on snow */
+    left: -150px; /* Start off-screen */
+    width: 100px;
+    height: auto;
+    z-index: 1000;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+    will-change: transform;
+}
+
+#scrolling-penguin img {
+    width: 100%;
+    height: auto;
+    animation: waddle 1s infinite ease-in-out;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth flip */
+    mix-blend-mode: multiply; /* Removes white background */
+    filter: contrast(1.1); /* Sharpens the image */
+}
+
+#scrolling-penguin:hover img {
+    animation: bounce 0.5s infinite ease-in-out;
+}
+
+.penguin-dialog {
+    position: absolute;
+    bottom: 110%;
+    background: white;
+    color: var(--bg-color);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+.penguin-dialog::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+#scrolling-penguin.active .penguin-dialog {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes waddle {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes jump {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.1) translateY(-30px); }
+}
+
+.penguin-jump {
+    animation: jump 0.6s ease-in-out !important;
+}
+
+/* Snowy Ground */
+#ground-snow {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: white;
+    z-index: 999;
+    box-shadow: 0 -10px 30px rgba(255, 255, 255, 0.4);
+    clip-path: polygon(
+        0% 20%, 5% 15%, 10% 25%, 15% 10%, 20% 30%, 
+        25% 15%, 30% 20%, 35% 5%, 40% 25%, 45% 15%, 
+        50% 20%, 55% 10%, 60% 30%, 65% 15%, 70% 25%, 
+        75% 5%, 80% 20%, 85% 15%, 90% 30%, 95% 10%, 100% 20%,
+        100% 100%, 0% 100%
+    );
+}
+
+#ground-snow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
+    pointer-events: none;
+}
