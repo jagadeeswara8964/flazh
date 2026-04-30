@@ -34,8 +34,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999997; /* Below particles and cursor */
+    z-index: 999997;
     transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+@media screen and (max-width: 768px) {
+    #loading-screen {
+        display: none !important;
+    }
 }
 
 main {
@@ -56,7 +62,7 @@ main {
 }
 
 .snowball {
-    font-size: 80px;
+    font-size: clamp(40px, 15vw, 80px);
     color: white;
     animation: spin 2s infinite linear, pulse 1.5s infinite ease-in-out;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
@@ -197,12 +203,13 @@ nav ul li a:hover {
 }
 
 h1 {
-    font-size: clamp(2.5rem, 10vw, 5rem);
-    line-height: 1;
+    font-size: clamp(2rem, 8vw, 5rem);
+    line-height: 1.1;
     margin-bottom: 2rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
+    word-wrap: break-word;
 }
 
 .glitch {
@@ -225,14 +232,14 @@ h1 {
 .glitch::before {
     left: 2px;
     text-shadow: -2px 0 #b6bac5;
-    clip: rect(24px, 550px, 90px, 0);
+    clip: rect(0, 1000px, 1000px, 0); /* Larger rect to avoid cutting off wrapped text */
     animation: glitch-anim 2s infinite linear alternate-reverse;
 }
 
 .glitch::after {
     left: -2px;
     text-shadow: -2px 0 #ffffff;
-    clip: rect(85px, 550px, 140px, 0);
+    clip: rect(0, 1000px, 1000px, 0);
     animation: glitch-anim2 3s infinite linear alternate-reverse;
 }
 
@@ -287,9 +294,9 @@ h2 {
 
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
 }
 
 .project-card {

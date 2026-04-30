@@ -6,18 +6,31 @@ let mouseY = window.innerHeight / 2;
 window.addEventListener('load', () => {
     const loader = document.getElementById('loading-screen');
     const particleCanvas = document.getElementById('particle-canvas');
-    setTimeout(() => {
-        loader.style.opacity = '0';
-        loader.style.visibility = 'hidden';
-        // Reset particles to stay behind content but above background
-        particleCanvas.style.zIndex = '0'; 
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Immediate show on mobile
+        if (loader) {
+            loader.style.display = 'none';
+        }
+        particleCanvas.style.zIndex = '0';
         document.body.style.overflow = 'auto';
         document.body.style.overflowX = 'hidden';
-        
-        // Trigger content entrance
         const mainContent = document.querySelector('main');
         if (mainContent) mainContent.classList.add('visible');
-    }, 2500); // 2.5 seconds
+    } else {
+        // Delayed show on desktop/tablet
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            particleCanvas.style.zIndex = '0'; 
+            document.body.style.overflow = 'auto';
+            document.body.style.overflowX = 'hidden';
+            
+            const mainContent = document.querySelector('main');
+            if (mainContent) mainContent.classList.add('visible');
+        }, 2000); // Reduced a bit for better UX
+    }
 });
 
 // Particle System
@@ -25,7 +38,7 @@ const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 
 let particles = [];
-const particleCount = 200; // Increased count
+const particleCount = window.innerWidth <= 768 ? 50 : 150; // Reduced on mobile for performance
 
 function resize() {
     canvas.width = window.innerWidth;
