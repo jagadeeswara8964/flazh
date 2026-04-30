@@ -36,7 +36,7 @@ a, button, .project-card, input, textarea {
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 99999;
     color: var(--accent-color);
     transform: translate(-50%, -50%);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -49,7 +49,7 @@ a, button, .project-card, input, textarea {
     pointer-events: none;
     background: var(--accent-color);
     border-radius: 50%;
-    z-index: 9999;
+    z-index: 99998;
     filter: blur(1px);
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
 }
@@ -67,10 +67,17 @@ a, button, .project-card, input, textarea {
 
 header {
     position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 2rem 5%;
-    z-index: 100;
+    top: 20px;
+    left: 5%;
+    width: 90%;
+    padding: 1rem 3%;
+    z-index: 10000;
+    background: rgba(56, 62, 78, 0.4);
+    backdrop-filter: blur(15px) saturate(150%);
+    -webkit-backdrop-filter: blur(15px) saturate(150%);
+    border: 1px solid rgba(182, 186, 197, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 nav {
@@ -400,4 +407,87 @@ footer p {
     height: 100%;
     background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
     pointer-events: none;
+}
+
+/* Responsive Design Queries */
+@media screen and (max-width: 1024px) {
+    .fullscreen {
+        padding: 0 5%;
+    }
+    
+    h1 {
+        font-size: clamp(2rem, 8vw, 4rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        top: 10px;
+        left: 3%;
+        width: 94%;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+        letter-spacing: 0.15rem;
+    }
+    
+    nav ul {
+        gap: 1.5rem;
+    }
+    
+    nav ul li a {
+        font-size: 0.7rem;
+    }
+    
+    .cta-btn {
+        padding: 0.4rem 1.2rem;
+        font-size: 0.7rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    #scrolling-penguin {
+        width: 70px; /* Smaller penguin on mobile */
+        bottom: 25px;
+    }
+
+    #ground-snow {
+        height: 45px;
+    }
+
+    .penguin-dialog {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        padding: 0.6rem 1rem;
+    }
+
+    nav ul {
+        display: none; /* Hide nav links on very small screens for simplicity */
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .logo {
+        letter-spacing: 0.1rem;
+    }
 }
