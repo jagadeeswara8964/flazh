@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniWRLD | Authentication</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-page">
+    <canvas id="particle-canvas"></canvas>
+    <div id="custom-cursor">❄</div>
+
+    <main class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1 id="auth-title">Welcome Back</h1>
+                <p id="auth-subtitle">Login to access your onchain world.</p>
+            </div>
+
+            <div class="form-container">
+                <form id="login-form" class="auth-form active">
+                    <div class="input-group">
+                        <label for="login-id">Unique User ID (Starts with 'user_')</label>
+                        <input type="text" id="login-id" placeholder="e.g. user_123" value="user_" maxlength="20" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                    <p class="toggle-text">Don't have an account? <span id="to-signup">Sign Up</span></p>
+                </form>
+
+                <form id="signup-form" class="auth-form">
+                    <div class="input-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-id">Unique User ID (Starts with 'user_')</label>
+                        <input type="text" id="signup-id" placeholder="e.g. user_new" value="user_" maxlength="20" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Account</button>
+                    <p class="toggle-text">Already have an account? <span id="to-login">Login</span></p>
+                </form>
+            </div>
+
+            <div class="auth-footer">
+                <button class="back-btn" onclick="window.location.href='index.html'">Back to Home</button>
+                <p>&copy; 2026 FLAZH Inc</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>

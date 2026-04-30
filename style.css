@@ -135,6 +135,7 @@ a, button, .project-card, input, textarea {
     height: 100%;
     z-index: 999998; /* Above loading screen */
     opacity: 0.5;
+    pointer-events: none;
 }
 
 header {
