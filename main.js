@@ -1,9 +1,31 @@
+// Mouse Coordinates (Initialize at top to avoid ReferenceErrors)
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+// Loading Screen Logic
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loading-screen');
+    const particleCanvas = document.getElementById('particle-canvas');
+    setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+        // Reset particles to stay behind content but above background
+        particleCanvas.style.zIndex = '0'; 
+        document.body.style.overflow = 'auto';
+        document.body.style.overflowX = 'hidden';
+        
+        // Trigger content entrance
+        const mainContent = document.querySelector('main');
+        if (mainContent) mainContent.classList.add('visible');
+    }, 2500); // 2.5 seconds
+});
+
 // Particle System
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 
 let particles = [];
-const particleCount = 100;
+const particleCount = 200; // Increased count
 
 function resize() {
     canvas.width = window.innerWidth;
@@ -21,18 +43,36 @@ class Particle {
     init() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2;
-        this.alpha = Math.random();
+        this.vx = (Math.random() - 0.5) * 1;
+        this.vy = (Math.random() - 0.5) * 1;
+        this.size = Math.random() * 3 + 1;
+        this.alpha = Math.random() * 0.5 + 0.2;
     }
 
     update() {
+        // Attraction/Repulsion logic
+        const dx = mouseX - this.x;
+        const dy = mouseY - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const forceThreshold = 150;
+        
+        if (distance > 0 && distance < forceThreshold) {
+            const force = (forceThreshold - distance) / forceThreshold;
+            const directionX = dx / distance;
+            const directionY = dy / distance;
+            
+            // Move away from cursor
+            this.x -= directionX * force * 5;
+            this.y -= directionY * force * 5;
+        }
+
         this.x += this.vx;
         this.y += this.vy;
 
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.x > canvas.width) this.x = 0;
+        if (this.y < 0) this.y = canvas.height;
+        if (this.y > canvas.height) this.y = 0;
     }
 
     draw() {
@@ -127,15 +167,14 @@ document.querySelectorAll('nav a').forEach(anchor => {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         document.querySelector(targetId).scrollIntoView({
-            behavior: 'smooth'
+            behavior: 'smooth',
+            block: 'center'
         });
     });
 });
 
 // Custom Cursor and Glitter Trail
 const customCursor = document.getElementById('custom-cursor');
-let mouseX = 0;
-let mouseY = 0;
 
 window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
