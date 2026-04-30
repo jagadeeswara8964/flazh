@@ -71,7 +71,10 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.classList.add('active');
             if (entry.target.classList.contains('scramble-trigger')) {
-                scrambleText(entry.target);
+                // Only scramble on non-mobile devices
+                if (window.innerWidth > 768) {
+                    scrambleText(entry.target);
+                }
             }
         }
     });
@@ -83,7 +86,14 @@ document.querySelectorAll('.fade-in, .scramble-trigger').forEach(el => {
 
 // Text Scramble Effect
 function scrambleText(element) {
-    const originalText = element.innerText;
+    if (element.dataset.scrambling === 'true') return;
+    
+    const originalText = element.dataset.value || element.innerText;
+    if (!element.dataset.value) {
+        element.dataset.value = originalText;
+    }
+    
+    element.dataset.scrambling = 'true';
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
     let iteration = 0;
     
@@ -94,12 +104,17 @@ function scrambleText(element) {
                 if (index < iteration) {
                     return originalText[index];
                 }
+                if (originalText[index] === " ") {
+                    return " ";
+                }
                 return chars[Math.floor(Math.random() * chars.length)];
             })
             .join("");
 
         if (iteration >= originalText.length) {
             clearInterval(interval);
+            element.dataset.scrambling = 'false';
+            element.innerText = originalText; // Ensure final text is exact
         }
 
         iteration += 1 / 3;
@@ -211,6 +226,32 @@ window.addEventListener('scroll', () => {
     }
     
     lastScrollY = scrollPosition;
+
+    // Project Card Focus Logic (Small devices only)
+    const cards = document.querySelectorAll('.project-card');
+    if (window.innerWidth <= 768) {
+        let closestCard = null;
+        let minDistance = Infinity;
+
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.top + rect.height / 2;
+            const screenCenter = window.innerHeight / 2;
+            const distance = Math.abs(cardCenter - screenCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestCard = card;
+            }
+            card.classList.remove('focused');
+        });
+
+        if (closestCard && minDistance < window.innerHeight * 0.3) {
+            closestCard.classList.add('focused');
+        }
+    } else {
+        cards.forEach(card => card.classList.remove('focused'));
+    }
 });
 
 // Initial position

@@ -259,10 +259,16 @@ h2 {
     opacity: 0.7;
 }
 
-.project-card:hover {
+.project-card:hover, .project-card.focused {
     border-color: var(--accent-color);
-    background: rgba(255, 255, 255, 0.03);
-    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.project-card.focused {
+    border-width: 2px;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 footer {
