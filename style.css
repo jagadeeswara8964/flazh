@@ -19,9 +19,16 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-main);
-    overflow: hidden; /* Hide scrollbar while loading */
+    overflow: hidden; /* Hide scrollbar while loading on desktop */
     line-height: 1.6;
     cursor: none;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        overflow: auto;
+        overflow-x: hidden;
+    }
 }
 
 #loading-screen {
@@ -54,6 +61,13 @@ main {
     transform: scale(2.5);
     transform-origin: center 50vh;
     transition: opacity 1.5s ease-out, transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media screen and (max-width: 768px) {
+    .content-entrance {
+        opacity: 1 !important;
+        transform: scale(1) !important;
+    }
 }
 
 .content-entrance.visible {

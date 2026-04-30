@@ -3,21 +3,25 @@ let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 
 // Loading Screen Logic
+// Immediate visibility for mobile
+if (window.innerWidth <= 768) {
+    document.body.style.overflow = 'auto';
+    document.body.style.overflowX = 'hidden';
+    const mainContent = document.querySelector('main');
+    if (mainContent) mainContent.classList.add('visible');
+    const loader = document.getElementById('loading-screen');
+    if (loader) loader.style.display = 'none';
+}
+
 window.addEventListener('load', () => {
     const loader = document.getElementById('loading-screen');
     const particleCanvas = document.getElementById('particle-canvas');
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
-        // Immediate show on mobile
-        if (loader) {
-            loader.style.display = 'none';
-        }
+        // Redundant but safe for mobile
+        if (loader) loader.style.display = 'none';
         particleCanvas.style.zIndex = '0';
-        document.body.style.overflow = 'auto';
-        document.body.style.overflowX = 'hidden';
-        const mainContent = document.querySelector('main');
-        if (mainContent) mainContent.classList.add('visible');
     } else {
         // Delayed show on desktop/tablet
         setTimeout(() => {
